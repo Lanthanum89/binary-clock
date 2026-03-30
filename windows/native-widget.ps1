@@ -269,10 +269,18 @@ function Get-PreferredFontFamily {
 
 $script:uiFontFamily = Get-PreferredFontFamily -Candidates @(
     "Segoe UI Variable Text",
-    "Space Grotesk",
     "Segoe UI",
-    "Calibri"
+    "Segoe UI Variable",
+    "Calibri",
+    "Arial"
 ) -Fallback "Segoe UI"
+
+$script:serifFontFamily = Get-PreferredFontFamily -Candidates @(
+    "Garamond",
+    "Georgia",
+    "Cambria",
+    "Times New Roman"
+) -Fallback "Georgia"
 
 function New-Font {
     param(
@@ -323,7 +331,7 @@ $rootPanel.Controls.Add($clockPanel)
 
 $titleLabel = New-Object System.Windows.Forms.Label
 $titleLabel.Text = "Binary Bloom"
-$titleLabel.Font = New-Font -Size 24 -Style ([System.Drawing.FontStyle]::Bold)
+$titleLabel.Font = New-Font -Family $script:serifFontFamily -Size 24 -Style ([System.Drawing.FontStyle]::Bold)
 $titleLabel.ForeColor = $theme.TextMain
 $titleLabel.BackColor = [System.Drawing.Color]::Transparent
 $titleLabel.AutoSize = $true
@@ -331,7 +339,7 @@ $titleLabel.Location = [System.Drawing.Point]::new(10, 2)
 $headerPanel.Controls.Add($titleLabel)
 
 $subtitleLabel = New-Object System.Windows.Forms.Label
-$subtitleLabel.Text = "A floating binary clock in pink and lilac. Resize freely, pin it on top, or hide it to the tray."
+$subtitleLabel.Text = "A floating binary clock in pink and lilac. Resize freely, pin it to the top, or minimize to the system tray."
 $subtitleLabel.Font = New-Font -Size 11
 $subtitleLabel.ForeColor = $theme.TextSoft
 $subtitleLabel.BackColor = [System.Drawing.Color]::Transparent

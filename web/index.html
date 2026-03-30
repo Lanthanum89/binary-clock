@@ -2,8 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#4a2954">
+  <meta name="description" content="A beautifully designed binary clock that displays time using binary lights. Read time in 24-hour or 12-hour format.">
   <title>Binary Bloom Clock</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23ff7cbf;stop-opacity:1' /><stop offset='100%' style='stop-color:%23b05ad4;stop-opacity:1' /></linearGradient></defs><rect width='192' height='192' rx='48' fill='%23fff5fc'/><circle cx='48' cy='48' r='24' fill='url(%23grad)' opacity='0.9'/><circle cx='144' cy='48' r='24' fill='url(%23grad)' opacity='0.7'/><circle cx='48' cy='144' r='24' fill='url(%23grad)' opacity='0.7'/><circle cx='144' cy='144' r='24' fill='url(%23grad)' opacity='0.9'/><circle cx='96' cy='96' r='20' fill='%234a2954' opacity='0.8'/></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23ff7cbf;stop-opacity:1' /><stop offset='100%' style='stop-color:%23b05ad4;stop-opacity:1' /></linearGradient></defs><rect width='180' height='180' rx='40' fill='%23fff5fc'/><circle cx='45' cy='45' r='22' fill='url(%23grad)' opacity='0.9'/><circle cx='135' cy='45' r='22' fill='url(%23grad)' opacity='0.7'/><circle cx='45' cy='135' r='22' fill='url(%23grad)' opacity='0.7'/><circle cx='135' cy='135' r='22' fill='url(%23grad)' opacity='0.9'/><circle cx='90' cy='90' r='18' fill='%234a2954' opacity='0.8'/></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
@@ -101,5 +106,22 @@
   </main>
 
   <script src="script.js"></script>
+  <script>
+    // Register service worker for PWA functionality
+    if ('serviceWorker' in navigator) {
+      const isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+      navigator.serviceWorker.register('service-worker.js')
+        .then(registration => {
+          if (isDev) {
+            console.log('Service Worker registered:', registration);
+          }
+        })
+        .catch(err => {
+          if (isDev) {
+            console.warn('Service Worker registration failed:', err);
+          }
+        });
+    }
+  </script>
 </body>
 </html>
