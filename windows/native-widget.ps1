@@ -331,7 +331,7 @@ $rootPanel.Controls.Add($clockPanel)
 
 $titleLabel = New-Object System.Windows.Forms.Label
 $titleLabel.Text = "Binary Bloom"
-$titleLabel.Font = New-Font -Family $script:serifFontFamily -Size 26 -Style ([System.Drawing.FontStyle]::Bold)
+$titleLabel.Font = New-Font -Family $script:serifFontFamily -Size 24 -Style ([System.Drawing.FontStyle]::Bold)
 $titleLabel.ForeColor = $theme.TextMain
 $titleLabel.BackColor = [System.Drawing.Color]::Transparent
 $titleLabel.AutoSize = $true
@@ -339,7 +339,7 @@ $titleLabel.Location = [System.Drawing.Point]::new(10, 2)
 $headerPanel.Controls.Add($titleLabel)
 
 $subtitleLabel = New-Object System.Windows.Forms.Label
-$subtitleLabel.Text = "A floating binary clock in pink and lilac. Resize freely, pin it to the top, or minimise to the system tray."
+$subtitleLabel.Text = "A floating binary clock in pink and lilac. Resize freely, pin it to the top, or minimize to the system tray."
 $subtitleLabel.Font = New-Font -Size 11
 $subtitleLabel.ForeColor = $theme.TextSoft
 $subtitleLabel.BackColor = [System.Drawing.Color]::Transparent

@@ -109,12 +109,17 @@
   <script>
     // Register service worker for PWA functionality
     if ('serviceWorker' in navigator) {
+      const isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
       navigator.serviceWorker.register('service-worker.js')
         .then(registration => {
-          console.log('Service Worker registered:', registration);
+          if (isDev) {
+            console.log('Service Worker registered:', registration);
+          }
         })
         .catch(err => {
-          console.warn('Service Worker registration failed:', err);
+          if (isDev) {
+            console.warn('Service Worker registration failed:', err);
+          }
         });
     }
   </script>

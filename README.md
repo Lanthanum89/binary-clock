@@ -19,7 +19,7 @@ Both versions currently use a compact 4-row binary layout with values `8, 4, 2, 
 
 ## Project Structure
 
-```
+```text
 binary-clock/
 ├── web/                    # Browser-based web app (PWA)
 │   ├── index.html         # Web app markup

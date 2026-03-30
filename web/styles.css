@@ -30,7 +30,7 @@ body {
     radial-gradient(circle at top left, rgba(255, 185, 222, 0.8), transparent 30%),
     radial-gradient(circle at bottom right, rgba(206, 177, 255, 0.75), transparent 36%),
     linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
-  overflow: auto;
+  overflow: hidden;
 }
 
 @media (max-width: 520px) {
@@ -593,12 +593,5 @@ body {
     padding: 9px 14px;
     font-size: 0.85rem;
   }
-}
-    justify-content: flex-start;
-  }
 
-  .fit-button {
-    width: 100%;
-    text-align: center;
-  }
 }

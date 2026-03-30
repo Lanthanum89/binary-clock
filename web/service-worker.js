@@ -12,8 +12,9 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(ASSETS_TO_CACHE).catch(err => {
-        // If some assets fail to cache (e.g., due to 404), continue without them
-        console.warn('Failed to cache some assets:', err);
+        // If some assets fail to cache (e.g., due to 404), log and fail install for critical assets
+        console.error('Failed to cache some assets during install:', err);
+        throw err;
       });
     })
   );
