@@ -90,4 +90,4 @@ Other behaviors:
 
 ## License
 
-No license file is currently included. Add a `LICENSE` file if you plan to publish this repository publicly.
+This project is licensed under the MIT License. See the `LICENSE` file for details.
