@@ -1,7 +1,7 @@
 {
   "name": "Binary Bloom Clock",
   "short_name": "Binary Clock",
-  "description": "A beautifully designed binary clock that displays time using binary lights. Read time in 24-hour or 12-hour format.",
+  "description": "A beautifully designed binary clock that displays time using binary lights. Read the time in 24-hour or 12-hour format.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

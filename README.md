@@ -66,7 +66,7 @@ binary-clock/
 
 ## Run the Native Desktop Widget (Windows)
 
-From `windows/` folder:
+From the `windows/` folder:
 
 Option 1:
 
@@ -88,7 +88,7 @@ Open `web/index.html` directly in a browser.
 
 ### Development server (recommended)
 
-From `web/` folder:
+From the `web/` folder:
 
 ```bash
 python -m http.server 5500
@@ -96,11 +96,11 @@ python -m http.server 5500
 
 Then open: `http://localhost:5500/index.html`
 
-### Mobile / Phone
+### Mobile & Phone
 
 1. Open `web/index.html` on your phone browser (or access via local network at `http://<your-ip>:5500`)
-2. Tap menu (⋮) → **Install app** or **Add to Home Screen**
-3. Appears in your app drawer and works offline
+2. Tap the menu (⋮) → **Install app** or **Add to Home Screen**
+3. The app appears in your app drawer and works offline
 
 ## Native Widget Controls
 

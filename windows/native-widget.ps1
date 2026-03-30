@@ -339,7 +339,7 @@ $titleLabel.Location = [System.Drawing.Point]::new(10, 2)
 $headerPanel.Controls.Add($titleLabel)
 
 $subtitleLabel = New-Object System.Windows.Forms.Label
-$subtitleLabel.Text = "A floating binary clock in pink and lilac. Resize freely, pin it on top, or hide it to the tray."
+$subtitleLabel.Text = "A floating binary clock in pink and lilac. Resize freely, pin it to the top, or minimise to the system tray."
 $subtitleLabel.Font = New-Font -Size 11
 $subtitleLabel.ForeColor = $theme.TextSoft
 $subtitleLabel.BackColor = [System.Drawing.Color]::Transparent
