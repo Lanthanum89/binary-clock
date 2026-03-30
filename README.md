@@ -19,13 +19,38 @@ Both versions currently use a compact 4-row binary layout with values `8, 4, 2, 
 
 ## Project Structure
 
-- `native-widget.ps1`: Main Windows desktop widget app
-- `launch-clock.cmd`: One-click Windows launcher (runs native widget in STA mode)
-- `launch-clock.ps1`: PowerShell launcher for native widget
-- `index.html`: Web app markup
-- `styles.css`: Web app styles
-- `script.js`: Web app logic
-- `widget-state.json`: Saved runtime state for native widget
+```
+binary-clock/
+├── web/                    # Browser-based web app (PWA)
+│   ├── index.html         # Web app markup
+│   ├── styles.css         # Web app styles (responsive design)
+│   ├── script.js          # Web app logic
+│   ├── manifest.json      # PWA manifest for app installation
+│   └── service-worker.js  # Offline support & caching
+├── windows/               # Windows desktop widget (PowerShell)
+│   ├── native-widget.ps1     # Main Windows desktop widget app
+│   ├── launch-clock.cmd      # One-click launcher (runs in STA mode)
+│   ├── launch-clock.ps1      # PowerShell launcher script
+│   └── widget-state.json     # Saved runtime state
+├── LICENSE
+└── README.md
+```
+
+### Web App Features
+
+- Responsive design for desktop, tablet, and phone
+- Installable as PWA (add to home screen on mobile)
+- Works offline (service worker caching)
+- 12h / 24h toggle
+- Elegant pastel UI
+
+### Windows App Features
+
+- Resizable desktop widget window
+- Drag-to-move and corner-resize
+- System tray support (hide/restore)
+- Always-on-top toggle
+- Local state persistence
 
 ## Requirements
 
@@ -41,6 +66,8 @@ Both versions currently use a compact 4-row binary layout with values `8, 4, 2, 
 
 ## Run the Native Desktop Widget (Windows)
 
+From `windows/` folder:
+
 Option 1:
 
 ```bat
@@ -55,17 +82,25 @@ powershell -NoProfile -ExecutionPolicy Bypass -STA -File .\native-widget.ps1
 
 ## Run the Web App
 
-Option 1 (quick): open `index.html` directly in a browser.
+### Quick start (local file)
 
-Option 2 (recommended local server):
+Open `web/index.html` directly in a browser.
+
+### Development server (recommended)
+
+From `web/` folder:
 
 ```bash
 python -m http.server 5500
 ```
 
-Then open:
+Then open: `http://localhost:5500/index.html`
 
-- `http://localhost:5500/index.html`
+### Mobile / Phone
+
+1. Open `web/index.html` on your phone browser (or access via local network at `http://<your-ip>:5500`)
+2. Tap menu (⋮) → **Install app** or **Add to Home Screen**
+3. Appears in your app drawer and works offline
 
 ## Native Widget Controls
 
