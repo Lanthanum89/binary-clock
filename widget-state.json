@@ -1,0 +1,10 @@
+﻿{
+    "TimeFormat":  "24",
+    "TopMost":  false,
+    "Bounds":  {
+                   "Left":  470,
+                   "Width":  980,
+                   "Top":  136,
+                   "Height":  760
+               }
+}

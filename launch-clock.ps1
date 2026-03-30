@@ -1,0 +1,1 @@
+& (Join-Path $PSScriptRoot "native-widget.ps1")
