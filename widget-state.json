@@ -2,9 +2,9 @@
     "TimeFormat":  "24",
     "TopMost":  false,
     "Bounds":  {
-                   "Left":  470,
+                   "Left":  641,
                    "Width":  980,
-                   "Top":  136,
+                   "Top":  178,
                    "Height":  760
                }
 }
