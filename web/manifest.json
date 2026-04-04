@@ -2,8 +2,8 @@
   "name": "Binary Bloom Clock",
   "short_name": "Binary Clock",
   "description": "A beautifully designed binary clock that displays time using binary lights. Read the time in 24-hour or 12-hour format.",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
   "theme_color": "#4a2954",
@@ -36,7 +36,7 @@
       "name": "24-Hour View",
       "short_name": "24h",
       "description": "Open Binary Clock in 24-hour mode",
-      "url": "/?mode=24",
+      "url": "./?mode=24",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' rx='24' fill='%23ffa8d9'/><text x='48' y='60' font-size='32' font-weight='bold' fill='white' text-anchor='middle'>24h</text></svg>",
@@ -49,7 +49,7 @@
       "name": "12-Hour View",
       "short_name": "12h",
       "description": "Open Binary Clock in 12-hour mode",
-      "url": "/?mode=12",
+      "url": "./?mode=12",
       "icons": [
         {
           "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'><rect width='96' height='96' rx='24' fill='%23e39cff'/><text x='48' y='60' font-size='32' font-weight='bold' fill='white' text-anchor='middle'>12h</text></svg>",
