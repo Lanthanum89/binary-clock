@@ -9,6 +9,10 @@ apps/
 
 # Android local SDK path file
 android/local.properties
+wearos-watchface/local.properties
 
 # Local tooling downloads/cache
 .tools/
+temp_auto_push.bat
+temp_interactive_push.bat
+.gitignore

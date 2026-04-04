@@ -2,6 +2,12 @@
 
 This project wraps the existing web clock as a native Android app.
 
+The Android runtime uses a compact app mode optimised for phone screens:
+
+- Dot-based binary lights (instead of rectangular tiles)
+- Portrait and landscape layouts tuned to keep the full clock visible
+- Automatic full-screen fitting inside the Android WebView
+
 ## Prerequisites
 
 - Android Studio (latest)
@@ -49,3 +55,7 @@ gradle wrapper
 ## Asset Sync
 
 The Gradle task syncWebAssets copies files from ../../web to app/src/main/assets/web before each build.
+
+## Related Project
+
+If you want a proper Wear OS watch face (for example for Google Play), use the standalone project in `../wearos-watchface`.

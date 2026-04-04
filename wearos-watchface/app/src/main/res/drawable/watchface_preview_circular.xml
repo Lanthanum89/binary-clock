@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#1B1024" />
+        </shape>
+    </item>
+
+    <item android:left="14dp" android:top="14dp" android:right="14dp" android:bottom="14dp">
+        <shape android:shape="oval">
+            <stroke
+                android:width="2dp"
+                android:color="#66F4DFFF" />
+            <solid android:color="#2A1737" />
+        </shape>
+    </item>
+
+    <item
+        android:left="44dp"
+        android:top="44dp"
+        android:right="44dp"
+        android:bottom="44dp"
+        android:drawable="@drawable/ic_watchface_branding" />
+</layer-list>

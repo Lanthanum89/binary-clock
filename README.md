@@ -1,20 +1,21 @@
 # Binary Bloom Clock
 
-A pastel-themed binary clock project with four runtime options:
+A pastel-themed binary clock project with five runtime options:
 
 - Native Windows desktop widget built with PowerShell + WinForms
 - Browser-based web app built with HTML, CSS, and JavaScript
 - Native Windows desktop app built with WPF + WebView2
 - Native Android app built with Kotlin + WebView
+- Native Wear OS watch face built with Kotlin + Canvas Watch Face API
 
-Both versions currently use a compact 4-row binary layout with values `8, 4, 2, 1`.
+All versions use a compact 4-row binary layout with values `8, 4, 2, 1`.
 
 ## Features
 
 - Compact binary clock display for hours, minutes, and seconds
 - 12h / 24h toggle
 - Elegant pastel UI style
-- Resizable widget window (native version)
+- Resizable widget window (desktop native versions)
 - Drag-to-move header area (native and web widget shell behaviour)
 - Tray support for native app (hide/restore)
 - Local state persistence (window bounds and preferences)
@@ -46,6 +47,11 @@ binary-clock/
 │   ├── build.gradle.kts
 │   ├── settings.gradle.kts
 │   └── README.md
+├── wearos-watchface/      # Native Wear OS watch face project
+│   ├── app/
+│   ├── build.gradle.kts
+│   ├── settings.gradle.kts
+│   └── README.md
 ├── LICENSE
 └── README.md
 ```
@@ -70,6 +76,7 @@ binary-clock/
 
 - WPF + WebView2 wrapper that runs the same `web/` app in a native window
 - Kotlin + WebView Android wrapper that loads local bundled assets
+- Kotlin + Canvas Wear OS watch face service
 
 ## Requirements
 
@@ -140,6 +147,14 @@ The project automatically copies files from `../web` into the output folder.
 4. Run on an emulator or Android device.
 
 During build, Gradle copies `../../web` into `app/src/main/assets/web`.
+
+## Run the Wear OS Watch Face
+
+1. Open Android Studio.
+2. Open the folder `wearos-watchface`.
+3. Let Gradle sync and install required Wear OS SDK components.
+4. Run on a Wear OS emulator or watch.
+5. Select **Binary Bloom** as the active watch face.
 
 ## Native Widget Controls
 

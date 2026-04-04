@@ -1,0 +1,20 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.lanthanum89.binaryclock.watchface.app-mergeDebugResources-29:/values-hdpi-v4/values-hdpi-v4.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\laura\\.gradle\\caches\\8.10.2\\transforms\\d2c88535864e8ed53153e8de4a2dd416\\transformed\\appcompat-1.1.0\\res\\values-hdpi-v4\\values-hdpi-v4.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endLines": "6",
+                        "endColumns": "13",
+                        "endOffsets": "327"
+                    }
+                }
+            ]
+        }
+    ]
+}
