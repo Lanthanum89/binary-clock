@@ -1,0 +1,11 @@
+# Native wrapper build outputs
+windows/bin/
+windows/obj/
+android/.gradle/
+android/app/build/
+
+# Temporary leftover folder from previous layout
+apps/
+
+# Android local SDK path file
+android/local.properties
