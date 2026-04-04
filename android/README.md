@@ -15,6 +15,37 @@ This project wraps the existing web clock as a native Android app.
 3. Let Gradle sync.
 4. Run the app on an emulator or device.
 
+## Build APK From Terminal
+
+From the `android` folder:
+
+```powershell
+./build-apk.ps1
+```
+
+Or from Command Prompt:
+
+```bat
+build-apk.cmd
+```
+
+Release build:
+
+```powershell
+./build-apk.ps1 -Configuration release
+```
+
+Expected output paths:
+
+- Debug: `app/build/outputs/apk/debug/app-debug.apk`
+- Release: `app/build/outputs/apk/release/app-release.apk`
+
+If `gradlew.bat` does not exist yet, open this folder in Android Studio once and run:
+
+```bash
+gradle wrapper
+```
+
 ## Asset Sync
 
 The Gradle task syncWebAssets copies files from ../../web to app/src/main/assets/web before each build.
