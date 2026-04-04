@@ -1,9 +1,11 @@
 # Binary Bloom Clock
 
-A pastel-themed binary clock project with two runtime options:
+A pastel-themed binary clock project with four runtime options:
 
 - Native Windows desktop widget built with PowerShell + WinForms
 - Browser-based web app built with HTML, CSS, and JavaScript
+- Native Windows desktop app built with WPF + WebView2
+- Native Android app built with Kotlin + WebView
 
 Both versions currently use a compact 4-row binary layout with values `8, 4, 2, 1`.
 
@@ -13,7 +15,7 @@ Both versions currently use a compact 4-row binary layout with values `8, 4, 2, 
 - 12h / 24h toggle
 - Elegant pastel UI style
 - Resizable widget window (native version)
-- Drag-to-move header area (native and web widget shell behavior)
+- Drag-to-move header area (native and web widget shell behaviour)
 - Tray support for native app (hide/restore)
 - Local state persistence (window bounds and preferences)
 
@@ -27,11 +29,23 @@ binary-clock/
 │   ├── script.js          # Web app logic
 │   ├── manifest.json      # PWA manifest for app installation
 │   └── service-worker.js  # Offline support & caching
-├── windows/               # Windows desktop widget (PowerShell)
+├── powershell/            # Windows desktop widget (PowerShell)
 │   ├── native-widget.ps1     # Main Windows desktop widget app
 │   ├── launch-clock.cmd      # One-click launcher (runs in STA mode)
 │   ├── launch-clock.ps1      # PowerShell launcher script
 │   └── widget-state.json     # Saved runtime state
+├── windows/               # Native Windows app wrapper (WPF + WebView2)
+│   ├── BinaryBloomClock.Windows.csproj
+│   ├── App.xaml
+│   ├── App.xaml.cs
+│   ├── MainWindow.xaml
+│   ├── MainWindow.xaml.cs
+│   └── README.md
+├── android/               # Native Android app wrapper (Kotlin + WebView)
+│   ├── app/
+│   ├── build.gradle.kts
+│   ├── settings.gradle.kts
+│   └── README.md
 ├── LICENSE
 └── README.md
 ```
@@ -52,6 +66,11 @@ binary-clock/
 - Always-on-top toggle
 - Local state persistence
 
+### Additional Native Wrappers
+
+- WPF + WebView2 wrapper that runs the same `web/` app in a native window
+- Kotlin + WebView Android wrapper that loads local bundled assets
+
 ## Requirements
 
 ### Native widget
@@ -66,7 +85,7 @@ binary-clock/
 
 ## Run the Native Desktop Widget (Windows)
 
-From the `windows/` folder:
+From the `powershell/` folder:
 
 Option 1:
 
@@ -102,6 +121,26 @@ Then open: `http://localhost:5500/index.html`
 2. Tap the menu (⋮) → **Install app** or **Add to Home Screen**
 3. The app appears in your app drawer and works offline
 
+## Run the Native Windows App (WPF + WebView2)
+
+From the repo root:
+
+```powershell
+cd windows
+dotnet run
+```
+
+The project automatically copies files from `../web` into the output folder.
+
+## Run the Native Android App (Kotlin + WebView)
+
+1. Open Android Studio.
+2. Open the folder `android`.
+3. Let Gradle sync and install required SDK components.
+4. Run on an emulator or Android device.
+
+During build, Gradle copies `../../web` into `app/src/main/assets/web`.
+
 ## Native Widget Controls
 
 Top buttons:
@@ -112,7 +151,7 @@ Top buttons:
 - `Tray`: Hide to system tray
 - `Close`: Exit app
 
-Other behaviors:
+Other behaviours:
 
 - Drag header area to move
 - Drag edges/corners to resize
@@ -123,6 +162,6 @@ Other behaviors:
 - State is saved to `widget-state.json` in the project folder.
 - If PowerShell execution policy blocks startup, run with `-ExecutionPolicy Bypass` as shown above.
 
-## License
+## Licence
 
-This project is licensed under the MIT License. See the `LICENSE` file for details.
+This project is licensed under the MIT Licence. See the `LICENSE` file for details.
