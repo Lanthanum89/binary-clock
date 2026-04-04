@@ -9,3 +9,6 @@ apps/
 
 # Android local SDK path file
 android/local.properties
+
+# Local tooling downloads/cache
+.tools/
