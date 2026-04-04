@@ -1,11 +1,13 @@
 const CACHE_NAME = 'binary-bloom-v1';
 const ASSETS_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/styles.css',
-  '/script.js',
-  '/manifest.json'
+  './',
+  './index.html',
+  './styles.css',
+  './script.js',
+  './manifest.json'
 ];
+
+const APP_SCOPE_PATH = new URL(self.registration.scope).pathname;
 
 // Install event - cache assets
 self.addEventListener('install', event => {
@@ -47,7 +49,7 @@ self.addEventListener('fetch', event => {
   // Network first for API calls, cache first for assets
   const url = new URL(event.request.url);
   
-  if (url.pathname === '/' || url.pathname.endsWith('.html') || 
+  if (url.pathname === APP_SCOPE_PATH || url.pathname.endsWith('.html') || 
       url.pathname.endsWith('.css') || url.pathname.endsWith('.js') ||
       url.pathname.endsWith('.json')) {
     
