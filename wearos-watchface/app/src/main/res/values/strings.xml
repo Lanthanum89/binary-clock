@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Binary Bloom Watch Face</string>
+    <string name="watch_face_name">Binary Bloom</string>
+    <string name="time_format_setting_name">Time format</string>
+    <string name="time_format_setting_description">Choose between 24-hour and 12-hour display</string>
+    <string name="time_format_24h">24-hour</string>
+    <string name="time_format_12h">12-hour</string>
+</resources>

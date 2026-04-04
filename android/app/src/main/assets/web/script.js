@@ -14,6 +14,7 @@ const widgetBar = document.getElementById("widgetBar");
 const periodLabel = document.querySelector("[data-period-label]");
 const formatButtons = document.querySelectorAll("[data-format-toggle]");
 const fitToScreenButton = document.getElementById("fitToScreenButton");
+const isEmbeddedAndroidApp = window.location.protocol === "file:";
 
 const SCREEN_MARGIN = 20;
 const MIN_WIDGET_WIDTH = 360;
@@ -22,6 +23,10 @@ const MAX_WIDGET_WIDTH = 1080;
 const MAX_WIDGET_HEIGHT = 860;
 
 let dragState = null;
+
+if (isEmbeddedAndroidApp) {
+  document.body.classList.add("android-app");
+}
 
 function loadState() {
   try {
@@ -200,6 +205,14 @@ function clampWidgetPosition(left, top) {
 }
 
 function applySavedLayout() {
+  if (isEmbeddedAndroidApp) {
+    widgetShell.style.left = "0px";
+    widgetShell.style.top = "0px";
+    widgetShell.style.width = "100vw";
+    widgetShell.style.height = "100dvh";
+    return;
+  }
+
   if (window.innerWidth <= 860) {
     widgetShell.style.left = "0px";
     widgetShell.style.top = "0px";
@@ -226,6 +239,10 @@ function applySavedLayout() {
 }
 
 function fitWidgetToScreen() {
+  if (isEmbeddedAndroidApp) {
+    return;
+  }
+
   if (window.innerWidth <= 860) {
     return;
   }
@@ -236,6 +253,12 @@ function fitWidgetToScreen() {
 }
 
 function fitContentToShell() {
+  if (isEmbeddedAndroidApp) {
+    clockContent.style.transform = "scale(1)";
+    clockContent.style.width = "100%";
+    return;
+  }
+
   if (window.innerWidth <= 860) {
     clockContent.style.transform = "scale(1)";
     return;
@@ -258,7 +281,7 @@ function fitContentToShell() {
 }
 
 function handlePointerDown(event) {
-  if (window.innerWidth <= 860 || event.target.closest("button")) {
+  if (isEmbeddedAndroidApp || window.innerWidth <= 860 || event.target.closest("button")) {
     return;
   }
 
@@ -292,6 +315,10 @@ function handlePointerUp() {
 }
 
 function trackResize() {
+  if (isEmbeddedAndroidApp) {
+    return;
+  }
+
   if (window.innerWidth <= 860) {
     return;
   }
@@ -326,10 +353,13 @@ function setupEvents() {
     });
   });
 
-  fitToScreenButton.addEventListener("click", fitWidgetToScreen);
-  widgetBar.addEventListener("pointerdown", handlePointerDown);
-  window.addEventListener("pointermove", handlePointerMove);
-  window.addEventListener("pointerup", handlePointerUp);
+  if (!isEmbeddedAndroidApp) {
+    fitToScreenButton.addEventListener("click", fitWidgetToScreen);
+    widgetBar.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+  }
+
   window.addEventListener("resize", () => {
     applySavedLayout();
     fitContentToShell();

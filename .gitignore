@@ -9,6 +9,7 @@ apps/
 
 # Android local SDK path file
 android/local.properties
+wearos-watchface/local.properties
 
 # Local tooling downloads/cache
 .tools/

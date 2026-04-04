@@ -15,4 +15,4 @@ cd windows
 dotnet run
 ```
 
-The project automatically copies files from ../web into the build output under web/.
+The project automatically synchronises files from `../web` into the build output under `web/`.
