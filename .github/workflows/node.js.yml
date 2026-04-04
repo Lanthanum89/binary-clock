@@ -1,7 +1,4 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
-name: Node.js CI
+name: Repository CI
 
 on:
   push:
@@ -10,22 +7,58 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
-
+  validate:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
+
+    - name: Validate repository layout
+      run: |
+        test -d web
+        test -d powershell
+        test -d windows
+        test -d android
+        test -f web/index.html
+        test -f web/styles.css
+        test -f web/script.js
+        test -f web/manifest.json
+        test -f web/service-worker.js
+        test -f powershell/native-widget.ps1
+        test -f windows/BinaryBloomClock.Windows.csproj
+        test -f android/app/build.gradle.kts
+
+    - name: Validate JSON files
+      run: |
+        python -m json.tool web/manifest.json > /dev/null
+
+    - name: Validate PowerShell syntax
+      shell: pwsh
+      run: |
+        $errors = @()
+        Get-ChildItem -Path powershell -Filter *.ps1 | ForEach-Object {
+          $parseErrors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile($_.FullName, [ref]$null, [ref]$parseErrors)
+          if ($parseErrors) {
+            $errors += $parseErrors
+          }
+        }
+
+        if ($errors.Count -gt 0) {
+          $errors | ForEach-Object { Write-Host $_ }
+          throw "PowerShell parse errors found."
+        }
+
+  windows-build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Setup .NET SDK
+      uses: actions/setup-dotnet@v4
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+        dotnet-version: 9.0.x
+
+    - name: Build Windows wrapper
+      run: dotnet build windows/BinaryBloomClock.Windows.csproj --configuration Release --nologo
