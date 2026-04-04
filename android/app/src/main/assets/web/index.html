@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#4a2954">
+  <meta name="description" content="A beautifully designed binary clock that displays time using binary lights. Read time in 24-hour or 12-hour format.">
+  <title>Binary Bloom Clock</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23ff7cbf;stop-opacity:1' /><stop offset='100%' style='stop-color:%23b05ad4;stop-opacity:1' /></linearGradient></defs><rect width='192' height='192' rx='48' fill='%23fff5fc'/><circle cx='48' cy='48' r='24' fill='url(%23grad)' opacity='0.9'/><circle cx='144' cy='48' r='24' fill='url(%23grad)' opacity='0.7'/><circle cx='48' cy='144' r='24' fill='url(%23grad)' opacity='0.7'/><circle cx='144' cy='144' r='24' fill='url(%23grad)' opacity='0.9'/><circle cx='96' cy='96' r='20' fill='%234a2954' opacity='0.8'/></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'><defs><linearGradient id='grad' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' style='stop-color:%23ff7cbf;stop-opacity:1' /><stop offset='100%' style='stop-color:%23b05ad4;stop-opacity:1' /></linearGradient></defs><rect width='180' height='180' rx='40' fill='%23fff5fc'/><circle cx='45' cy='45' r='22' fill='url(%23grad)' opacity='0.9'/><circle cx='135' cy='45' r='22' fill='url(%23grad)' opacity='0.7'/><circle cx='45' cy='135' r='22' fill='url(%23grad)' opacity='0.7'/><circle cx='135' cy='135' r='22' fill='url(%23grad)' opacity='0.9'/><circle cx='90' cy='90' r='18' fill='%234a2954' opacity='0.8'/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="background-glow background-glow-left"></div>
+  <div class="background-glow background-glow-right"></div>
+
+  <main class="clock-shell" id="widgetShell">
+    <div class="clock-content" id="clockContent">
+      <div class="widget-bar" id="widgetBar">
+        <div>
+          <p class="widget-label">Desktop widget</p>
+          <p class="widget-hint">Drag this bar to move. Pull the lower-right corner to resize.</p>
+        </div>
+        <div class="widget-actions">
+          <div class="mode-toggle" role="group" aria-label="Clock format">
+            <button class="mode-button is-active" type="button" data-format-toggle="24">24h</button>
+            <button class="mode-button" type="button" data-format-toggle="12">12h</button>
+          </div>
+          <button class="fit-button" type="button" id="fitToScreenButton">Fit screen</button>
+        </div>
+      </div>
+
+      <header class="hero">
+        <p class="eyebrow">Binary Bloom</p>
+        <h1>Read time using binary lights...</h1>
+        <p class="subtitle">
+          Each glowing tile represents a BCD value. Read tens and ones as separate 4-bit stacks for each unit, then switch between 24-hour and 12-hour reading.
+        </p>
+      </header>
+
+      <section class="clock-panel" aria-label="Binary clock">
+        <div class="time-columns">
+          <section class="time-column" data-unit="hours" aria-labelledby="hours-label">
+            <div class="column-header">
+              <span class="column-kicker" id="hours-label">Hours</span>
+              <span class="binary-readout" data-binary-label="hours">0000 0000</span>
+            </div>
+            <div class="bit-groups">
+              <div class="digit-group">
+                <span class="digit-label">Tens</span>
+                <div class="bit-stack" data-bits="hours-tens"></div>
+              </div>
+              <div class="digit-group">
+                <span class="digit-label">Ones</span>
+                <div class="bit-stack" data-bits="hours-ones"></div>
+              </div>
+            </div>
+            <div class="decimal-row">
+              <div class="decimal-readout" data-decimal-label="hours">00</div>
+              <div class="period-badge" data-period-label>24H</div>
+            </div>
+          </section>
+
+          <section class="time-column" data-unit="minutes" aria-labelledby="minutes-label">
+            <div class="column-header">
+              <span class="column-kicker" id="minutes-label">Minutes</span>
+              <span class="binary-readout" data-binary-label="minutes">0000 0000</span>
+            </div>
+            <div class="bit-groups">
+              <div class="digit-group">
+                <span class="digit-label">Tens</span>
+                <div class="bit-stack" data-bits="minutes-tens"></div>
+              </div>
+              <div class="digit-group">
+                <span class="digit-label">Ones</span>
+                <div class="bit-stack" data-bits="minutes-ones"></div>
+              </div>
+            </div>
+            <div class="decimal-readout" data-decimal-label="minutes">00</div>
+          </section>
+
+          <section class="time-column" data-unit="seconds" aria-labelledby="seconds-label">
+            <div class="column-header">
+              <span class="column-kicker" id="seconds-label">Seconds</span>
+              <span class="binary-readout" data-binary-label="seconds">0000 0000</span>
+            </div>
+            <div class="bit-groups">
+              <div class="digit-group">
+                <span class="digit-label">Tens</span>
+                <div class="bit-stack" data-bits="seconds-tens"></div>
+              </div>
+              <div class="digit-group">
+                <span class="digit-label">Ones</span>
+                <div class="bit-stack" data-bits="seconds-ones"></div>
+              </div>
+            </div>
+            <div class="decimal-readout" data-decimal-label="seconds">00</div>
+          </section>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+  <script>
+    // Register service worker for PWA functionality
+    if ('serviceWorker' in navigator) {
+      const isDev = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+      navigator.serviceWorker.register('service-worker.js')
+        .then(registration => {
+          if (isDev) {
+            console.log('Service Worker registered:', registration);
+          }
+        })
+        .catch(err => {
+          if (isDev) {
+            console.warn('Service Worker registration failed:', err);
+          }
+        });
+    }
+  </script>
+</body>
+</html>
