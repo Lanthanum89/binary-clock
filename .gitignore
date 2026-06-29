@@ -4,6 +4,10 @@ windows/obj/
 android/.gradle/
 android/app/build/
 
+# Web (Vite) build outputs
+web/node_modules/
+web/dist/
+
 # Temporary leftover folder from previous layout
 apps/
 

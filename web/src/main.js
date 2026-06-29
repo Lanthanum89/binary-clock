@@ -1,3 +1,5 @@
+import './styles.css';
+
 const BIT_VALUES = [8, 4, 2, 1];
 const UNITS = ["hours", "minutes", "seconds"];
 const STORAGE_KEY = "binary-bloom-clock-state";

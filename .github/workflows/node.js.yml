@@ -20,17 +20,32 @@ jobs:
         test -d windows
         test -d android
         test -f web/index.html
-        test -f web/styles.css
-        test -f web/script.js
-        test -f web/manifest.json
-        test -f web/service-worker.js
+        test -f web/src/styles.css
+        test -f web/src/main.js
+        test -f web/vite.config.js
+        test -f web/package.json
         test -f powershell/native-widget.ps1
         test -f windows/BinaryBloomClock.Windows.csproj
         test -f android/app/build.gradle.kts
 
-    - name: Validate JSON files
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+
+    - name: Install web dependencies
+      working-directory: web
+      run: npm ci
+
+    - name: Build web PWA
+      working-directory: web
+      run: npm run build
+
+    - name: Validate build output
       run: |
-        python -m json.tool web/manifest.json > /dev/null
+        test -f web/dist/index.html
+        test -f web/dist/manifest.webmanifest
+        test -d web/dist/icons
 
     - name: Validate PowerShell syntax
       shell: pwsh
