@@ -1,3 +1,5 @@
+import './styles.css';
+
 const BIT_VALUES = [8, 4, 2, 1];
 const UNITS = ["hours", "minutes", "seconds"];
 const STORAGE_KEY = "binary-bloom-clock-state";
@@ -368,6 +370,12 @@ function setupEvents() {
 }
 
 loadState();
+
+const modeParam = new URLSearchParams(window.location.search).get("mode");
+if (modeParam === "12" || modeParam === "24") {
+  state.format = modeParam;
+}
+
 createBitTiles();
 applyFormatButtons();
 applySavedLayout();
