@@ -370,6 +370,12 @@ function setupEvents() {
 }
 
 loadState();
+
+const modeParam = new URLSearchParams(window.location.search).get("mode");
+if (modeParam === "12" || modeParam === "24") {
+  state.format = modeParam;
+}
+
 createBitTiles();
 applyFormatButtons();
 applySavedLayout();
