@@ -304,6 +304,10 @@ body {
   gap: 18px;
 }
 
+.time-separator {
+  display: none;
+}
+
 .time-column {
   padding: 22px;
   display: flex;
@@ -461,7 +465,7 @@ body {
   :root {
     --dot-size: clamp(20px, 11vmin, 64px);
     --dot-gap: clamp(6px, 2.2vmin, 14px);
-    --unit-gap: clamp(16px, 7vmin, 56px);
+    --unit-gap: clamp(6px, 1.5vmin, 20px);
   }
 
   body {
@@ -553,6 +557,16 @@ body {
 
   .decimal-row,
   .time-column > .decimal-readout {
+    margin-top: 6px;
+  }
+
+  .time-separator {
+    display: block;
+    align-self: flex-end;
+    font-size: clamp(1.8rem, 9vmin, 3.2rem);
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-main);
     margin-top: 6px;
   }
 
