@@ -119,9 +119,12 @@ body {
 @media (max-width: 860px), (max-height: 860px) and (orientation: landscape) {
   .clock-shell {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     width: 100%;
     min-width: 100%;
-    min-height: auto;
+    min-height: 0;
     padding: 24px;
     margin: 0;
     border-radius: 24px;
@@ -210,6 +213,15 @@ body {
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 8px 16px rgba(198, 125, 218, 0.14), inset 0 0 0 1px rgba(219, 169, 229, 0.26);
   transform: translateY(-1px);
+}
+
+.rotate-button {
+  display: none;
+}
+
+.rotate-button.is-active {
+  color: var(--text-main);
+  background: linear-gradient(180deg, rgba(255, 168, 217, 0.95) 0%, rgba(227, 156, 255, 0.88) 100%);
 }
 
 .clock-panel {
@@ -451,20 +463,22 @@ body {
    either portrait or landscape (e.g. propped up on a nightstand). */
 @media (max-width: 860px), (max-height: 860px) and (orientation: landscape) {
   :root {
-    --dot-size: clamp(14px, 6vmin, 32px);
-    --dot-gap: clamp(4px, 1.4vmin, 9px);
-    --unit-gap: clamp(12px, 4.5vmin, 32px);
+    --dot-size: clamp(20px, 11vmin, 64px);
+    --dot-gap: clamp(6px, 2.2vmin, 14px);
+    --unit-gap: clamp(16px, 7vmin, 56px);
   }
 
   body {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     min-height: 100dvh;
   }
 
   .clock-content {
-    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
     transform: none !important;
   }
 
@@ -485,8 +499,21 @@ body {
     display: none;
   }
 
+  .rotate-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem;
+    line-height: 1;
+    padding: 9px 14px;
+  }
+
   .clock-panel {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-height: 0;
   }
 
   .time-columns {
@@ -506,8 +533,8 @@ body {
   }
 
   .column-header,
-  .decimal-row,
-  .digit-label {
+  .digit-label,
+  .period-badge {
     display: none;
   }
 
@@ -515,9 +542,9 @@ body {
     gap: var(--dot-gap);
   }
 
-  .night-clock {
-    margin-top: 18px;
-    font-size: clamp(1.8rem, 9vmin, 3.4rem);
+  .decimal-readout {
+    font-size: clamp(1.8rem, 9vmin, 3.2rem);
+    margin-top: 6px;
   }
 
   .fit-button {
@@ -713,10 +740,30 @@ body.night-mode .night-button.is-active {
   box-shadow: none;
 }
 
-/* On mobile the digital readout is always shown alongside the dots (not just in
-   night mode), since the traditional dot-only layout drops the per-unit numbers. */
+/* On mobile the per-unit decimal numbers under the dots already show the full
+   time, so the separate combined digital readout would just repeat it. */
 @media (max-width: 860px), (max-height: 860px) and (orientation: landscape) {
-  .night-clock {
-    display: block;
+  body.night-mode .night-clock {
+    display: none;
   }
+}
+
+/* Manual rotate toggle: visually rotates the whole page 90 degrees so the
+   layout can be forced into landscape even when the OS/browser viewport is
+   still reporting portrait (e.g. rotation lock is on and the phone is
+   propped on its side on a nightstand). */
+html.force-rotate,
+body.force-rotate {
+  overflow: hidden;
+}
+
+body.force-rotate {
+  position: fixed;
+  top: 0;
+  left: 100%;
+  width: 100vh;
+  height: 100vw;
+  min-height: 0;
+  transform-origin: 0 0;
+  transform: rotate(90deg);
 }

@@ -11,7 +11,8 @@ const state = {
   position: null,
   size: null,
   theme: PREFERS_DARK ? "dark" : "light",
-  nightMode: false
+  nightMode: false,
+  forceRotate: false
 };
 
 const widgetShell = document.getElementById("widgetShell");
@@ -22,6 +23,7 @@ const formatButtons = document.querySelectorAll("[data-format-toggle]");
 const fitToScreenButton = document.getElementById("fitToScreenButton");
 const themeToggleButton = document.getElementById("themeToggleButton");
 const nightModeButton = document.getElementById("nightModeButton");
+const rotateButton = document.getElementById("rotateButton");
 const nightClockReadout = document.getElementById("nightClockReadout");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const isEmbeddedAndroidApp = window.location.protocol === "file:";
@@ -112,6 +114,13 @@ function applyNightMode() {
   nightModeButton.setAttribute("aria-pressed", String(state.nightMode));
   nightModeButton.classList.toggle("is-active", state.nightMode);
   updateThemeColorMeta();
+}
+
+function applyForceRotate() {
+  document.documentElement.classList.toggle("force-rotate", state.forceRotate);
+  document.body.classList.toggle("force-rotate", state.forceRotate);
+  rotateButton.setAttribute("aria-pressed", String(state.forceRotate));
+  rotateButton.classList.toggle("is-active", state.forceRotate);
 }
 
 function createBitTiles() {
@@ -424,6 +433,11 @@ function setupEvents() {
     saveState();
   });
 
+  rotateButton.addEventListener("click", () => {
+    state.forceRotate = !state.forceRotate;
+    applyForceRotate();
+  });
+
   if (!isEmbeddedAndroidApp) {
     fitToScreenButton.addEventListener("click", fitWidgetToScreen);
     widgetBar.addEventListener("pointerdown", handlePointerDown);
@@ -449,6 +463,7 @@ createBitTiles();
 applyFormatButtons();
 applyTheme();
 applyNightMode();
+applyForceRotate();
 applySavedLayout();
 trackResize();
 setupEvents();
