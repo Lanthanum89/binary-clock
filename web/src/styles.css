@@ -116,7 +116,7 @@ body {
   overflow: hidden;
 }
 
-@media (max-width: 860px) {
+@media (max-width: 860px), (max-height: 860px) and (orientation: landscape) {
   .clock-shell {
     position: relative;
     width: 100%;
@@ -145,30 +145,12 @@ body {
 .widget-bar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 18px;
   margin-bottom: 24px;
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(219, 169, 229, 0.2);
   cursor: grab;
-}
-
-.widget-label,
-.widget-hint {
-  margin: 0;
-}
-
-.widget-label {
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  font-size: 0.72rem;
-  color: var(--accent-deep);
-}
-
-.widget-hint {
-  margin-top: 6px;
-  font-size: 0.85rem;
-  color: var(--text-soft);
 }
 
 .widget-actions {
@@ -228,34 +210,6 @@ body {
   background: rgba(255, 255, 255, 0.96);
   box-shadow: 0 8px 16px rgba(198, 125, 218, 0.14), inset 0 0 0 1px rgba(219, 169, 229, 0.26);
   transform: translateY(-1px);
-}
-
-.hero {
-  margin-bottom: 28px;
-}
-
-.eyebrow {
-  margin: 0 0 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.26em;
-  font-size: 0.8rem;
-  color: var(--accent-deep);
-}
-
-.hero h1 {
-  margin: 0;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: clamp(2.8rem, 4vw, 4.6rem);
-  line-height: 0.95;
-  font-weight: 600;
-}
-
-.subtitle {
-  max-width: 680px;
-  margin: 14px 0 0;
-  color: var(--text-soft);
-  font-size: 1rem;
-  line-height: 1.65;
 }
 
 .clock-panel {
@@ -491,28 +445,17 @@ body {
   }
 }
 
-@media (max-width: 860px) {
-  .clock-shell {
-    position: relative;
-    width: 100%;
-    min-width: 100%;
-    min-height: auto;
-    padding: 24px;
-    margin: 0;
-    border-radius: 24px;
-    resize: none;
-  }
-
+@media (max-width: 860px), (max-height: 860px) and (orientation: landscape) {
   .clock-content {
     min-height: auto;
     transform: none !important;
   }
 
   .widget-bar {
-    flex-direction: column;
-    align-items: flex-start;
+    justify-content: flex-start;
     cursor: default;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
+    padding-bottom: 14px;
   }
 
   .widget-actions {
@@ -521,76 +464,48 @@ body {
     flex-wrap: wrap;
   }
 
-  .hero {
-    margin-bottom: 20px;
-  }
-
-  .hero h1 {
-    font-size: clamp(2rem, 5vw, 3rem);
-  }
-
   .clock-panel {
     display: block;
   }
 
   .time-columns {
     grid-template-columns: 1fr;
-    gap: 16px;
-  }
-
-  .time-column {
-    padding: 18px;
-    gap: 16px;
-  }
-
-  .bit-groups {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 520px) {
-  body {
-    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
-  }
-
-  .clock-shell {
-    padding: 16px;
-    border-radius: 20px;
-  }
-
-  .widget-bar {
-    margin-bottom: 16px;
-  }
-
-  .widget-label {
-    font-size: 0.65rem;
-  }
-
-  .widget-hint {
-    font-size: 0.75rem;
-  }
-
-  .hero {
-    margin-bottom: 16px;
-  }
-
-  .eyebrow {
-    font-size: 0.7rem;
-  }
-
-  .hero h1 {
-    font-size: clamp(1.8rem, 6vw, 2.5rem);
-    line-height: 1;
-  }
-
-  .subtitle {
-    font-size: 0.9rem;
-    margin-top: 10px;
+    gap: 12px;
   }
 
   .time-column {
     padding: 14px;
     gap: 12px;
+  }
+
+  .bit-groups {
+    grid-template-columns: 1fr;
+  }
+
+  .fit-button {
+    padding: 9px 14px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 520px), (max-height: 520px) and (orientation: landscape) {
+  body {
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
+  }
+
+  .clock-shell {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .widget-bar {
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+  }
+
+  .time-column {
+    padding: 12px;
+    gap: 10px;
   }
 
   .column-header {
@@ -636,7 +551,53 @@ body {
     padding: 9px 14px;
     font-size: 0.85rem;
   }
+}
 
+/* Phone in landscape: lay hours/minutes/seconds out side by side instead of stacking,
+   so the clock fits the short viewport height without scrolling. */
+@media (orientation: landscape) and (max-height: 860px) {
+  :root {
+    --dot-size: clamp(10px, 3.4vh, 22px);
+    --dot-gap: clamp(4px, 1vh, 10px);
+  }
+
+  .clock-shell {
+    padding: 14px 18px;
+  }
+
+  .widget-bar {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  .time-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .time-column {
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .bit-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .column-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .decimal-readout {
+    font-size: clamp(1.4rem, 4vh, 2.2rem);
+  }
+
+  .night-clock {
+    margin-top: 10px;
+    font-size: clamp(1.8rem, 7vh, 3rem);
+  }
 }
 
 /* Android app mode: compact, dot-based layout that keeps the full clock in view. */
@@ -648,8 +609,7 @@ body.android-app {
 }
 
 body.android-app .background-glow,
-body.android-app .widget-bar,
-body.android-app .hero {
+body.android-app .widget-bar {
   display: none;
 }
 
@@ -776,8 +736,6 @@ body.night-mode {
 }
 
 body.night-mode .background-glow,
-body.night-mode .hero,
-body.night-mode .widget-hint,
 body.night-mode #fitToScreenButton,
 body.night-mode .theme-button {
   display: none;
