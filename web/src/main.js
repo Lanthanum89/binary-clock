@@ -4,10 +4,14 @@ const BIT_VALUES = [8, 4, 2, 1];
 const UNITS = ["hours", "minutes", "seconds"];
 const STORAGE_KEY = "binary-bloom-clock-state";
 
+const PREFERS_DARK = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+
 const state = {
   format: "24",
   position: null,
-  size: null
+  size: null,
+  theme: PREFERS_DARK ? "dark" : "light",
+  nightMode: false
 };
 
 const widgetShell = document.getElementById("widgetShell");
@@ -16,7 +20,17 @@ const widgetBar = document.getElementById("widgetBar");
 const periodLabel = document.querySelector("[data-period-label]");
 const formatButtons = document.querySelectorAll("[data-format-toggle]");
 const fitToScreenButton = document.getElementById("fitToScreenButton");
+const themeToggleButton = document.getElementById("themeToggleButton");
+const nightModeButton = document.getElementById("nightModeButton");
+const nightClockReadout = document.getElementById("nightClockReadout");
+const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const isEmbeddedAndroidApp = window.location.protocol === "file:";
+
+const THEME_COLORS = {
+  light: "#4a2954",
+  dark: "#15101c",
+  night: "#060302"
+};
 
 const SCREEN_MARGIN = 20;
 const MIN_WIDGET_WIDTH = 360;
@@ -49,6 +63,14 @@ function loadState() {
     if (saved.size) {
       state.size = saved.size;
     }
+
+    if (saved.theme === "light" || saved.theme === "dark") {
+      state.theme = saved.theme;
+    }
+
+    if (typeof saved.nightMode === "boolean") {
+      state.nightMode = saved.nightMode;
+    }
   } catch {
     localStorage.removeItem(STORAGE_KEY);
   }
@@ -58,10 +80,33 @@ function saveState() {
   const nextState = {
     format: state.format,
     position: state.position,
-    size: state.size
+    size: state.size,
+    theme: state.theme,
+    nightMode: state.nightMode
   };
 
   localStorage.setItem(STORAGE_KEY, JSON.stringify(nextState));
+}
+
+function updateThemeColorMeta() {
+  const color = state.nightMode ? THEME_COLORS.night : THEME_COLORS[state.theme];
+  themeColorMeta.setAttribute("content", color);
+}
+
+function applyTheme() {
+  document.documentElement.dataset.theme = state.theme;
+  themeToggleButton.textContent = state.theme === "dark" ? "Light" : "Dark";
+  themeToggleButton.setAttribute("aria-pressed", String(state.theme === "dark"));
+  themeToggleButton.classList.toggle("is-active", state.theme === "dark");
+  updateThemeColorMeta();
+}
+
+function applyNightMode() {
+  document.body.classList.toggle("night-mode", state.nightMode);
+  nightModeButton.textContent = state.nightMode ? "Day" : "Night";
+  nightModeButton.setAttribute("aria-pressed", String(state.nightMode));
+  nightModeButton.classList.toggle("is-active", state.nightMode);
+  updateThemeColorMeta();
 }
 
 function createBitTiles() {
@@ -139,6 +184,13 @@ function updateClock() {
   updateUnit("minutes", now.getMinutes());
   updateUnit("seconds", now.getSeconds());
   periodLabel.textContent = hourValue.period;
+
+  const hourText = String(hourValue.display).padStart(2, "0");
+  const minuteText = String(now.getMinutes()).padStart(2, "0");
+  const secondText = String(now.getSeconds()).padStart(2, "0");
+  nightClockReadout.textContent = state.format === "12"
+    ? `${hourText}:${minuteText}:${secondText} ${hourValue.period}`
+    : `${hourText}:${minuteText}:${secondText}`;
 }
 
 function getViewportSize() {
@@ -355,6 +407,18 @@ function setupEvents() {
     });
   });
 
+  themeToggleButton.addEventListener("click", () => {
+    state.theme = state.theme === "dark" ? "light" : "dark";
+    applyTheme();
+    saveState();
+  });
+
+  nightModeButton.addEventListener("click", () => {
+    state.nightMode = !state.nightMode;
+    applyNightMode();
+    saveState();
+  });
+
   if (!isEmbeddedAndroidApp) {
     fitToScreenButton.addEventListener("click", fitWidgetToScreen);
     widgetBar.addEventListener("pointerdown", handlePointerDown);
@@ -378,6 +442,8 @@ if (modeParam === "12" || modeParam === "24") {
 
 createBitTiles();
 applyFormatButtons();
+applyTheme();
+applyNightMode();
 applySavedLayout();
 trackResize();
 setupEvents();
