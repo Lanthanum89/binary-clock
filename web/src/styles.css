@@ -189,7 +189,8 @@ body {
 
 .mode-button.is-active,
 .theme-button.is-active,
-.night-button.is-active {
+.night-button.is-active,
+.rotate-button.is-active {
   color: var(--text-main);
   background: linear-gradient(180deg, rgba(255, 168, 217, 0.95) 0%, rgba(227, 156, 255, 0.88) 100%);
   box-shadow: 0 8px 16px rgba(198, 125, 218, 0.2);
@@ -217,11 +218,6 @@ body {
 
 .rotate-button {
   display: none;
-}
-
-.rotate-button.is-active {
-  color: var(--text-main);
-  background: linear-gradient(180deg, rgba(255, 168, 217, 0.95) 0%, rgba(227, 156, 255, 0.88) 100%);
 }
 
 .clock-panel {
@@ -533,9 +529,18 @@ body {
   }
 
   .column-header,
-  .digit-label,
-  .period-badge {
+  .digit-label {
     display: none;
+  }
+
+  :root[data-format="24"] .period-badge {
+    display: none;
+  }
+
+  .period-badge {
+    min-width: 0;
+    padding: 6px 10px;
+    font-size: 0.7rem;
   }
 
   .bit-groups {
@@ -734,7 +739,8 @@ body.night-mode .clock-shell {
 }
 
 body.night-mode .mode-button.is-active,
-body.night-mode .night-button.is-active {
+body.night-mode .night-button.is-active,
+body.night-mode .rotate-button.is-active {
   background: linear-gradient(180deg, #ff9d57 0%, #ff5e3d 100%);
   color: #1a0e08;
   box-shadow: none;

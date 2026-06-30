@@ -141,6 +141,8 @@ function createBitTiles() {
 }
 
 function applyFormatButtons() {
+  document.documentElement.dataset.format = state.format;
+
   formatButtons.forEach((button) => {
     const isActive = button.dataset.formatToggle === state.format;
     button.classList.toggle("is-active", isActive);
@@ -446,6 +448,11 @@ function setupEvents() {
   }
 
   window.addEventListener("resize", () => {
+    if (state.forceRotate && !isCompactViewport()) {
+      state.forceRotate = false;
+      applyForceRotate();
+    }
+
     applySavedLayout();
     fitContentToShell();
     saveState();
