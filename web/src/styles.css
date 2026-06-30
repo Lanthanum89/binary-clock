@@ -455,8 +455,8 @@ body {
 
 /* Mobile: a traditional binary clockface — one flat row of LED-style dot columns
    (hours-tens, hours-ones, minutes-tens, minutes-ones, seconds-tens, seconds-ones)
-   plus a single digital readout, so the whole clock fits on screen at a glance in
-   either portrait or landscape (e.g. propped up on a nightstand). */
+   with the decimal value under each unit, so the whole clock fits on screen at a
+   glance in either portrait or landscape (e.g. propped up on a nightstand). */
 @media (max-width: 860px), (max-height: 860px) and (orientation: landscape) {
   :root {
     --dot-size: clamp(20px, 11vmin, 64px);
@@ -549,6 +549,10 @@ body {
 
   .decimal-readout {
     font-size: clamp(1.8rem, 9vmin, 3.2rem);
+  }
+
+  .decimal-row,
+  .time-column > .decimal-readout {
     margin-top: 6px;
   }
 
