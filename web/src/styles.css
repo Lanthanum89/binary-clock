@@ -778,7 +778,7 @@ body.night-mode {
 body.night-mode .background-glow,
 body.night-mode .hero,
 body.night-mode .widget-hint,
-body.night-mode .fit-button,
+body.night-mode #fitToScreenButton,
 body.night-mode .theme-button {
   display: none;
 }
