@@ -37,8 +37,13 @@ const MIN_WIDGET_WIDTH = 360;
 const MIN_WIDGET_HEIGHT = 620;
 const MAX_WIDGET_WIDTH = 1080;
 const MAX_WIDGET_HEIGHT = 860;
+const COMPACT_BREAKPOINT = 860;
 
 let dragState = null;
+
+function isCompactViewport() {
+  return Math.min(window.innerWidth, window.innerHeight) <= COMPACT_BREAKPOINT;
+}
 
 if (isEmbeddedAndroidApp) {
   document.body.classList.add("android-app");
@@ -267,7 +272,7 @@ function applySavedLayout() {
     return;
   }
 
-  if (window.innerWidth <= 860) {
+  if (isCompactViewport()) {
     widgetShell.style.left = "0px";
     widgetShell.style.top = "0px";
     widgetShell.style.height = "auto";
@@ -297,7 +302,7 @@ function fitWidgetToScreen() {
     return;
   }
 
-  if (window.innerWidth <= 860) {
+  if (isCompactViewport()) {
     return;
   }
 
@@ -313,7 +318,7 @@ function fitContentToShell() {
     return;
   }
 
-  if (window.innerWidth <= 860) {
+  if (isCompactViewport()) {
     clockContent.style.transform = "scale(1)";
     return;
   }
@@ -335,7 +340,7 @@ function fitContentToShell() {
 }
 
 function handlePointerDown(event) {
-  if (isEmbeddedAndroidApp || window.innerWidth <= 860 || event.target.closest("button")) {
+  if (isEmbeddedAndroidApp || isCompactViewport() || event.target.closest("button")) {
     return;
   }
 
@@ -373,7 +378,7 @@ function trackResize() {
     return;
   }
 
-  if (window.innerWidth <= 860) {
+  if (isCompactViewport()) {
     return;
   }
 

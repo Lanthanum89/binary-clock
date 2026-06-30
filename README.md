@@ -12,11 +12,14 @@ All versions use a compact 4-row binary layout with values `8, 4, 2, 1`.
 
 ## Features
 
-- Compact binary clock display for hours, minutes, and seconds
+- Compact binary clock display for hours, minutes, and seconds using small dot tiles
 - 12h / 24h toggle
+- Light / dark theme toggle (defaults to system preference)
+- Night mode: a dimmed, warm bedside view with a large digital readout under the dots
 - Elegant pastel UI style
 - Resizable widget window (desktop native versions)
 - Drag-to-move header area (native and web widget shell behaviour)
+- Mobile-optimised layout, including a dedicated landscape layout for phones
 - Tray support for native app (hide/restore)
 - Local state persistence (window bounds and preferences)
 
@@ -24,12 +27,14 @@ All versions use a compact 4-row binary layout with values `8, 4, 2, 1`.
 
 ```text
 binary-clock/
-├── web/                    # Browser-based web app (PWA)
+├── web/                    # Browser-based web app (PWA), built with Vite
 │   ├── index.html         # Web app markup
-│   ├── styles.css         # Web app styles (responsive design)
-│   ├── script.js          # Web app logic
-│   ├── manifest.json      # PWA manifest for app installation
-│   └── service-worker.js  # Offline support & caching
+│   ├── src/
+│   │   ├── main.js        # Web app logic
+│   │   └── styles.css     # Web app styles (responsive design)
+│   ├── public/icons/      # App icons
+│   ├── vite.config.js     # Vite + vite-plugin-pwa config (manifest, service worker)
+│   └── package.json
 ├── powershell/            # Windows desktop widget (PowerShell)
 │   ├── native-widget.ps1     # Main Windows desktop widget app
 │   ├── launch-clock.cmd      # One-click launcher (runs in STA mode)
@@ -58,10 +63,11 @@ binary-clock/
 
 ### Web App Features
 
-- Responsive design for desktop, tablet, and phone
-- Installable as PWA (add to home screen on mobile)
-- Works offline (service worker caching)
+- Responsive design for desktop, tablet, and phone, including a compact landscape layout
+- Installable as a PWA (add to home screen / install app on mobile and desktop)
+- Works offline (service worker caching via vite-plugin-pwa)
 - 12h / 24h toggle
+- Light / dark theme toggle and a dimmed night mode for bedside use
 - Elegant pastel UI
 
 ### Windows App Features
@@ -89,6 +95,7 @@ binary-clock/
 ### Web app
 
 - Any modern browser
+- Node.js 22+ and npm (for local development/build only — no build tools needed to just use the live site)
 
 ## Run the Native Desktop Widget (Windows)
 
@@ -108,25 +115,33 @@ powershell -NoProfile -ExecutionPolicy Bypass -STA -File .\native-widget.ps1
 
 ## Run the Web App
 
-### Quick start (local file)
+The web app is live at [lanthanum89.github.io/binary-clock](http://lanthanum89.github.io/binary-clock/), deployed automatically from `main` via GitHub Actions (`.github/workflows/deploy-pages.yml`).
 
-Open `web/index.html` directly in a browser.
-
-### Development server (recommended)
+### Development server
 
 From the `web/` folder:
 
 ```bash
-python -m http.server 5500
+npm install
+npm run dev
 ```
 
-Then open: `http://localhost:5500/index.html`
+Then open the URL Vite prints (typically `http://localhost:5173`).
+
+### Production build
+
+```bash
+npm run build
+npm run preview
+```
+
+`npm run build` outputs the static site (including the generated manifest and service worker) to `web/dist/`.
 
 ### Mobile & Phone
 
-1. Open `web/index.html` on your phone browser (or access via local network at `http://<your-ip>:5500`)
+1. Open the live site (or your local dev server, on the same network) on your phone browser
 2. Tap the menu (⋮) → **Install app** or **Add to Home Screen**
-3. The app appears in your app drawer and works offline
+3. The app appears in your app drawer, works offline, and adapts to both portrait and landscape orientation
 
 ## Run the Native Windows App (WPF + WebView2)
 
