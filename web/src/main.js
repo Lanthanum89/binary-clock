@@ -11,7 +11,8 @@ const state = {
   position: null,
   size: null,
   theme: PREFERS_DARK ? "dark" : "light",
-  nightMode: false
+  nightMode: false,
+  forceRotate: false
 };
 
 const widgetShell = document.getElementById("widgetShell");
@@ -22,6 +23,7 @@ const formatButtons = document.querySelectorAll("[data-format-toggle]");
 const fitToScreenButton = document.getElementById("fitToScreenButton");
 const themeToggleButton = document.getElementById("themeToggleButton");
 const nightModeButton = document.getElementById("nightModeButton");
+const rotateButton = document.getElementById("rotateButton");
 const nightClockReadout = document.getElementById("nightClockReadout");
 const themeColorMeta = document.querySelector('meta[name="theme-color"]');
 const isEmbeddedAndroidApp = window.location.protocol === "file:";
@@ -114,6 +116,13 @@ function applyNightMode() {
   updateThemeColorMeta();
 }
 
+function applyForceRotate() {
+  document.documentElement.classList.toggle("force-rotate", state.forceRotate);
+  document.body.classList.toggle("force-rotate", state.forceRotate);
+  rotateButton.setAttribute("aria-pressed", String(state.forceRotate));
+  rotateButton.classList.toggle("is-active", state.forceRotate);
+}
+
 function createBitTiles() {
   UNITS.forEach((unit) => {
     ["tens", "ones"].forEach((digitPosition) => {
@@ -132,6 +141,8 @@ function createBitTiles() {
 }
 
 function applyFormatButtons() {
+  document.documentElement.dataset.format = state.format;
+
   formatButtons.forEach((button) => {
     const isActive = button.dataset.formatToggle === state.format;
     button.classList.toggle("is-active", isActive);
@@ -424,6 +435,11 @@ function setupEvents() {
     saveState();
   });
 
+  rotateButton.addEventListener("click", () => {
+    state.forceRotate = !state.forceRotate;
+    applyForceRotate();
+  });
+
   if (!isEmbeddedAndroidApp) {
     fitToScreenButton.addEventListener("click", fitWidgetToScreen);
     widgetBar.addEventListener("pointerdown", handlePointerDown);
@@ -432,6 +448,11 @@ function setupEvents() {
   }
 
   window.addEventListener("resize", () => {
+    if (state.forceRotate && !isCompactViewport()) {
+      state.forceRotate = false;
+      applyForceRotate();
+    }
+
     applySavedLayout();
     fitContentToShell();
     saveState();
@@ -449,6 +470,7 @@ createBitTiles();
 applyFormatButtons();
 applyTheme();
 applyNightMode();
+applyForceRotate();
 applySavedLayout();
 trackResize();
 setupEvents();
