@@ -446,6 +446,11 @@ body {
 }
 
 @media (max-width: 860px), (max-height: 860px) and (orientation: landscape) {
+  :root {
+    --dot-size: clamp(11px, 3.6vmin, 22px);
+    --dot-gap: clamp(4px, 1.1vmin, 10px);
+  }
+
   .clock-content {
     min-height: auto;
     transform: none !important;
@@ -454,8 +459,8 @@ body {
   .widget-bar {
     justify-content: flex-start;
     cursor: default;
-    margin-bottom: 16px;
-    padding-bottom: 14px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
   }
 
   .widget-actions {
@@ -470,16 +475,24 @@ body {
 
   .time-columns {
     grid-template-columns: 1fr;
-    gap: 12px;
+    grid-auto-rows: min-content;
+    align-content: start;
+    gap: 10px;
   }
 
   .time-column {
-    padding: 14px;
-    gap: 12px;
+    min-height: auto;
+    padding: 12px;
+    gap: 8px;
   }
 
   .bit-groups {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .decimal-readout {
+    font-size: clamp(1.8rem, 7vmin, 2.8rem);
   }
 
   .fit-button {
@@ -572,6 +585,7 @@ body {
 
   .time-columns {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-content: stretch;
     gap: 10px;
   }
 
