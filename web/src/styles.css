@@ -14,6 +14,40 @@
   --tile-idle-border: rgba(201, 155, 213, 0.3);
   --tile-active: linear-gradient(180deg, #ffa8d9 0%, #e39cff 100%);
   --tile-active-border: rgba(255, 255, 255, 0.78);
+  --body-glow-1: rgba(255, 185, 222, 0.8);
+  --body-glow-2: rgba(206, 177, 255, 0.75);
+  --surface-1: rgba(255, 255, 255, 0.58);
+  --surface-2: rgba(255, 255, 255, 0.72);
+  --surface-3: rgba(255, 255, 255, 0.78);
+  --surface-4: rgba(255, 255, 255, 0.82);
+  --dot-size: clamp(14px, 3.2vw, 30px);
+  --dot-gap: clamp(6px, 1.4vw, 14px);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-top: #15101c;
+  --bg-bottom: #0c0a12;
+  --panel: rgba(28, 22, 38, 0.78);
+  --panel-border: rgba(140, 100, 170, 0.32);
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --text-main: #f3e8fb;
+  --text-soft: #b79cc7;
+  --accent-deep: #e3a6ff;
+  --tile-idle: rgba(255, 255, 255, 0.06);
+  --tile-idle-border: rgba(180, 140, 200, 0.28);
+  --tile-active: linear-gradient(180deg, #ff9bd0 0%, #c98bff 100%);
+  --tile-active-border: rgba(255, 255, 255, 0.55);
+  --body-glow-1: rgba(255, 140, 200, 0.18);
+  --body-glow-2: rgba(160, 110, 220, 0.18);
+  --surface-1: rgba(255, 255, 255, 0.05);
+  --surface-2: rgba(255, 255, 255, 0.08);
+  --surface-3: rgba(255, 255, 255, 0.07);
+  --surface-4: rgba(255, 255, 255, 0.09);
+}
+
+[data-theme="dark"] .background-glow {
+  opacity: 0.32;
 }
 
 * {
@@ -27,9 +61,10 @@ body {
   font-family: "Space Grotesk", system-ui, "Segoe UI", sans-serif;
   color: var(--text-main);
   background:
-    radial-gradient(circle at top left, rgba(255, 185, 222, 0.8), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(206, 177, 255, 0.75), transparent 36%),
+    radial-gradient(circle at top left, var(--body-glow-1), transparent 30%),
+    radial-gradient(circle at bottom right, var(--body-glow-2), transparent 36%),
     linear-gradient(180deg, var(--bg-top), var(--bg-bottom));
+  transition: background 220ms ease;
   overflow: hidden;
 }
 
@@ -149,7 +184,7 @@ body {
   gap: 8px;
   padding: 6px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
+  background: var(--surface-2);
   box-shadow: inset 0 0 0 1px rgba(219, 169, 229, 0.26);
 }
 
@@ -163,9 +198,13 @@ body {
   background: transparent;
   color: var(--text-soft);
   transition: background 180ms ease, color 180ms ease, box-shadow 180ms ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.mode-button.is-active {
+.mode-button.is-active,
+.theme-button.is-active,
+.night-button.is-active {
   color: var(--text-main);
   background: linear-gradient(180deg, rgba(255, 168, 217, 0.95) 0%, rgba(227, 156, 255, 0.88) 100%);
   box-shadow: 0 8px 16px rgba(198, 125, 218, 0.2);
@@ -177,10 +216,12 @@ body {
   cursor: pointer;
   padding: 11px 16px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--surface-4);
   color: var(--accent-deep);
   box-shadow: inset 0 0 0 1px rgba(219, 169, 229, 0.26);
   transition: transform 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .fit-button:hover {
@@ -225,7 +266,7 @@ body {
 .time-column {
   border-radius: 26px;
   border: 1px solid rgba(219, 169, 229, 0.28);
-  background: rgba(255, 255, 255, 0.58);
+  background: var(--surface-1);
 }
 
 .guide-column {
@@ -248,6 +289,11 @@ body {
 .bit-stack {
   display: grid;
   gap: 12px;
+}
+
+.bit-stack {
+  justify-items: center;
+  gap: var(--dot-gap);
 }
 
 .bit-groups {
@@ -278,7 +324,7 @@ body {
   text-align: center;
   border-radius: 16px;
   font-weight: 700;
-  background: rgba(255, 255, 255, 0.76);
+  background: var(--surface-3);
   color: var(--accent-deep);
   box-shadow: inset 0 0 0 1px rgba(219, 169, 229, 0.24);
 }
@@ -317,7 +363,7 @@ body {
   font-size: 0.8rem;
   font-weight: 700;
   color: var(--accent-deep);
-  background: rgba(255, 255, 255, 0.78);
+  background: var(--surface-3);
   box-shadow: inset 0 0 0 1px rgba(219, 169, 229, 0.28);
 }
 
@@ -327,11 +373,12 @@ body {
 
 .bit-tile {
   position: relative;
-  min-height: 70px;
-  border-radius: 24px;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
   border: 1px solid var(--tile-idle-border);
   background: var(--tile-idle);
-  box-shadow: inset 0 -10px 18px rgba(255, 255, 255, 0.45);
+  box-shadow: inset 0 -3px 8px rgba(255, 255, 255, 0.45);
   transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease, background 220ms ease;
   overflow: hidden;
 }
@@ -339,9 +386,10 @@ body {
 .bit-tile::after {
   content: attr(data-value);
   position: absolute;
-  right: 16px;
-  bottom: 12px;
-  font-size: 0.88rem;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: clamp(0.5rem, 1.6vmin, 0.7rem);
   color: rgba(122, 79, 134, 0.7);
 }
 
@@ -349,15 +397,16 @@ body {
   border-color: var(--tile-active-border);
   background: var(--tile-active);
   box-shadow:
-    0 12px 24px rgba(255, 144, 202, 0.22),
+    0 8px 16px rgba(255, 144, 202, 0.32),
     inset 0 1px 0 rgba(255, 255, 255, 0.62);
-  transform: translateY(-2px) scale(1.01);
+  transform: scale(1.08);
 }
 
 .bit-tile.active::before {
   content: "";
   position: absolute;
   inset: 0;
+  border-radius: 50%;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.42), transparent 55%);
 }
 
@@ -392,7 +441,7 @@ body {
   letter-spacing: 0.16em;
   text-align: center;
   color: var(--accent-deep);
-  background: rgba(255, 255, 255, 0.82);
+  background: var(--surface-4);
   box-shadow: inset 0 0 0 1px rgba(219, 169, 229, 0.26);
 }
 
@@ -411,7 +460,7 @@ body {
   border-radius: 999px;
   font-size: 0.9rem;
   color: var(--text-soft);
-  background: rgba(255, 255, 255, 0.66);
+  background: var(--surface-2);
   border: 1px solid rgba(219, 169, 229, 0.28);
 }
 
@@ -501,7 +550,7 @@ body {
 
 @media (max-width: 520px) {
   body {
-    padding: 12px;
+    padding: max(12px, env(safe-area-inset-top)) max(12px, env(safe-area-inset-right)) max(12px, env(safe-area-inset-bottom)) max(12px, env(safe-area-inset-left));
   }
 
   .clock-shell {
@@ -561,12 +610,6 @@ body {
 
   .digit-label {
     font-size: 0.6rem;
-  }
-
-  .bit-tile {
-    min-height: 48px;
-    border-radius: 16px;
-    font-size: 0.75rem;
   }
 
   .decimal-readout {
@@ -663,25 +706,7 @@ body.android-app .bit-groups {
   gap: clamp(6px, 1.6vmin, 10px);
 }
 
-body.android-app .bit-stack {
-  justify-items: center;
-  gap: var(--dot-gap);
-}
-
-body.android-app .bit-tile {
-  width: var(--dot-size);
-  height: var(--dot-size);
-  min-height: 0;
-  border-radius: 50%;
-  box-shadow: inset 0 -2px 6px rgba(255, 255, 255, 0.45);
-}
-
 body.android-app .bit-tile::after {
-  right: auto;
-  bottom: auto;
-  inset: 0;
-  display: grid;
-  place-items: center;
   font-size: clamp(0.52rem, 1.5vmin, 0.62rem);
 }
 
@@ -710,4 +735,65 @@ body.android-app .period-badge {
   body.android-app .decimal-readout {
     font-size: clamp(1.05rem, 3.5vmin, 1.55rem);
   }
+}
+
+/* Night mode: dim, warm bedside view — dots plus a single digital readout. */
+.night-clock {
+  display: none;
+  margin-top: 24px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--text-main);
+  font-size: clamp(2.4rem, 8vw, 4.2rem);
+}
+
+body.night-mode .night-clock {
+  display: block;
+}
+
+body.night-mode {
+  color-scheme: dark;
+  --bg-top: #060302;
+  --bg-bottom: #000000;
+  --panel: rgba(12, 7, 4, 0.88);
+  --panel-border: rgba(140, 70, 30, 0.3);
+  --shadow: none;
+  --text-main: #ff9d57;
+  --text-soft: #b5723a;
+  --accent-deep: #ff8c4b;
+  --tile-idle: rgba(255, 255, 255, 0.03);
+  --tile-idle-border: rgba(255, 140, 70, 0.2);
+  --tile-active: linear-gradient(180deg, #ff9d57 0%, #ff5e3d 100%);
+  --tile-active-border: rgba(255, 200, 150, 0.5);
+  --body-glow-1: rgba(120, 50, 20, 0.12);
+  --body-glow-2: rgba(80, 30, 10, 0.1);
+  --surface-1: rgba(255, 120, 50, 0.05);
+  --surface-2: rgba(255, 120, 50, 0.08);
+  --surface-3: rgba(255, 120, 50, 0.07);
+  --surface-4: rgba(255, 120, 50, 0.09);
+}
+
+body.night-mode .background-glow,
+body.night-mode .hero,
+body.night-mode .widget-hint,
+body.night-mode .fit-button,
+body.night-mode .theme-button {
+  display: none;
+}
+
+body.night-mode .widget-bar {
+  border-bottom-color: transparent;
+}
+
+body.night-mode .clock-shell {
+  box-shadow: none;
+}
+
+body.night-mode .mode-button.is-active,
+body.night-mode .night-button.is-active {
+  background: linear-gradient(180deg, #ff9d57 0%, #ff5e3d 100%);
+  color: #1a0e08;
+  box-shadow: none;
 }
